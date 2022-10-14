@@ -1,1 +1,198 @@
-[]
+[
+    {
+        "id": "8fdd7ac8b5537ec9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a61504da11fdc6bf",
+        "type": "ruuvitag",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "",
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "c72456db3bc4e084",
+                "f5d5ad4c594555c8"
+            ]
+        ]
+    },
+    {
+        "id": "4904e84c7a45cb08",
+        "type": "inject",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "Autostart continuous BLE scan",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "continuous",
+                "v": "true",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "start",
+        "x": 170,
+        "y": 40,
+        "wires": [
+            [
+                "c6d0bf90ee01f8ea"
+            ]
+        ]
+    },
+    {
+        "id": "c72456db3bc4e084",
+        "type": "json",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 240,
+        "wires": [
+            [
+                "9c1653639ae36847"
+            ]
+        ]
+    },
+    {
+        "id": "683fc7ae12d25f3a",
+        "type": "inject",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "Stop BLE scan manually",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "stop",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "c6d0bf90ee01f8ea"
+            ]
+        ]
+    },
+    {
+        "id": "766e50bef5e556e8",
+        "type": "debug",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "advertisements",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "c6d0bf90ee01f8ea",
+        "type": "BLE scanner",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "",
+        "services": "",
+        "servicesType": "str",
+        "continuous": true,
+        "x": 470,
+        "y": 80,
+        "wires": [
+            [
+                "766e50bef5e556e8",
+                "8c623e66d3c39f40"
+            ]
+        ]
+    },
+    {
+        "id": "8c623e66d3c39f40",
+        "type": "function",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "transfor BLE scanner ads to what ruuivtag expects",
+        "func": "msg.peripheralUuid = msg.peripheral;\nmsg.advertisement = {manufacturerData: msg.manufacturerData};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 80,
+        "wires": [
+            [
+                "a61504da11fdc6bf",
+                "d858da7e4bc0dc8e"
+            ]
+        ]
+    },
+    {
+        "id": "f5d5ad4c594555c8",
+        "type": "debug",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "ruuvitag output",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "9c1653639ae36847",
+        "type": "debug",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "parse ruvi values",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d858da7e4bc0dc8e",
+        "type": "debug",
+        "z": "8fdd7ac8b5537ec9",
+        "name": "ruuvitag input",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 20,
+        "wires": []
+    }
+]
