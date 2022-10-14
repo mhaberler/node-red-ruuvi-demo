@@ -1,9 +1,5 @@
 ruuvi-demo
 ==========
 
-decode ruuvitag info
+    example ruuvitag decoder using node-red-contrib-ble-scan and https://github.com/ojousima/node-red
 
-### About
-
-This is your project's README.md file. It helps users understand what your
-project does, how to use it and anything else they may need to know.
